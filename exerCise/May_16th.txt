@@ -1,0 +1,136 @@
+//  Created by Just1n on 22/16/5.
+//  Copyright (c) 2022年 . All rights reserved
+
+
+// 冒泡 + 选择 + 拼接 + 插入 + 二分   -> 归并！
+
+#include<stdio.h>
+
+void Print(int *arr, int length)
+{
+	for(int i = 0; i < length; i++)
+		printf("%d ", arr[i]);
+	putchar('\n');
+}
+
+void bubble_sort(int *arr, int length)
+{
+	int i, j, temp;
+	for(i = 0; i < length - 1; i++)
+	{
+		for(j = 0; j < length - 1 - i; j++)
+		{
+			if(arr[j] > arr[j + 1])
+			{
+				temp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = temp;
+			}
+		}
+	}
+}
+
+void select_sort(int *arr, int length)
+{
+	int i, j, temp;
+	for(i = 0; i < length - 1; i++)
+	{
+		int index = i;
+		for(j = i + 1; j < length; j++)
+		{
+			if(arr[j] < arr[index])
+				index = j;
+		}
+		if(index != i)
+		{
+			temp = arr[index];
+			arr[index] = arr[i];
+			arr[i] = temp;
+		}
+	}
+}
+
+void insert_sort(int *arr, int length)
+{
+	int i, j, temp;
+	for(i = 1; i < length; i++)
+	{
+		temp = arr[i];
+		for(j = i; j > 0 && arr[j - 1] < temp; j--)
+			arr[j] = arr[j - 1];
+		arr[j] = temp;
+	}
+}
+
+int BinarySearch(int *arr, int arr_length, int x)
+{
+	int left = 0, right = arr_length - 1;
+	
+	while(left <= right)
+	{
+		int mid = (left + right) / 2;
+		if(arr[mid] > x) 
+			right = mid - 1;  // 说明查找的数在 mid 左边，移动 right
+		else if(arr[mid] < x)
+			left = mid + 1;   // 说明查找的数在 mid 右边，移动 left
+		else 
+			return mid;	
+	}
+	
+	return -1;  // 未找到
+}
+
+void my_integrate(int *arr, int *bubb, int size_b, int *sele, int size_s)
+{
+	int i, j, k;
+	int max;  // 记录当前最大，最后追加
+	
+	i = j = k = 0;
+	
+	while(i < size_b && j < size_s)
+	{
+		if(bubb[i] < sele[j])
+		{
+			arr[k++] = bubb[i++];
+			max = sele[j];
+		}
+		else
+		{
+			arr[k++] = sele[j++];
+			max = bubb[i];
+		}
+	}
+	
+	arr[k] = max;
+}
+
+int main()
+{
+	int arr[10] = { 0 };
+	int arr_bubble[] = { 3, 8, 1, 6, 5 };  // 1 3 5 6 8
+	int arr_select[] = { 4, 7, 2, 9, 0 };  // 0 2 4 7 9
+	
+	Print(arr_bubble, sizeof(arr_bubble) / sizeof(*arr_bubble));
+	Print(arr_select, sizeof(arr_select) / sizeof(*arr_select));
+	
+	bubble_sort(arr_bubble, sizeof(arr_bubble) / sizeof(*arr_bubble)); 
+	select_sort(arr_select, sizeof(arr_select) / sizeof(*arr_select));
+	
+	Print(arr_bubble, sizeof(arr_bubble) / sizeof(*arr_bubble));
+	Print(arr_select, sizeof(arr_select) / sizeof(*arr_select));
+	
+	my_integrate(arr, arr_bubble, sizeof(arr_bubble) / sizeof(*arr_bubble), 
+					  arr_select, sizeof(arr_select) / sizeof(*arr_select));
+					  
+	int index = BinarySearch(arr, sizeof(arr) / sizeof(*arr), 5);
+	
+	Print(arr, sizeof(arr) / sizeof(*arr));
+	printf("查找的数为 5， 下标为%d\n", index);
+	
+	insert_sort(arr, sizeof(arr) / sizeof(*arr));
+	index = BinarySearch(arr, sizeof(arr) / sizeof(*arr), 5);
+	
+	Print(arr, sizeof(arr) / sizeof(*arr));
+	printf("查找的数为 5， 下标为%d\n", index);
+	
+}
