@@ -1,0 +1,145 @@
+//  Created by Just1n on 22/23/5.
+//  Copyright (c) 2022年 . All rights reserved
+
+
+/* 编写函数，求级数 S=1+2+3+...n，并在主函数中求
+
+          (1 + 2 + 3) + (1 + 2 + 3 + 4) + (1 + 2 + 3 + 4 + 5)
+	y = ———————————————————————————————————————————————————————
+	    (1 + 2 + 3 + 4 + 5 + 6) +  (1 + 2 + 3 + 4 + 5 + 6 + 7)
+*/
+
+#include<stdio.h>
+
+double function(int x)
+{
+	return x == 1 ? 1 : x + function(x - 1);
+}
+
+int main()
+{
+	double result;
+	
+	result = (function(3) + function(4) + function(5)) /
+				(function(6) + function(7));
+	
+	printf("result = %.5lf\n", result);
+	
+	return 0;
+}
+
+// 读入一个大于 2 的整数，打印它的所有质因子（所有为素数的因子）。
+// 如：若输入 2310， 则应输出 2、3、5、7、11.
+
+#include<stdio.h>
+
+int main()
+{
+	int i = 2, num;
+	printf("请输入一个大于 2 的整数:");
+	scanf("%d", &num);
+	printf("%d = ", num);
+	for(; i < num; i++) 
+	{
+		while(i != num)
+		{
+			if(num % i != 0)
+				break;
+			else
+			{
+			printf("%d * ", i);
+			num /= i;
+			}
+		}
+	}
+	
+	printf("%d\n", num);
+	return 0;
+}
+
+// 使用迭代法求斐不拉契数列（Fibonacci）的第 30 项。
+
+#include<stdio.h>
+
+// 1.递归  -> 计算越往后，效率越慢
+
+int fib(int x)
+{
+	return x == 1 || x == 2 ? 1 : fib(x - 1) + fib(x - 2);
+	//return x < 2 ? x : fibonacci(x - 1) + fibonacci(x - 2);
+	// 可开辟（N+1）个内存空间，以空间换时间，
+}
+
+// 2. 循环
+int fibon(int m)
+{
+	int x = 1, y = 1, sum = 0;
+	for (int i = 3; i <= m; i++)
+	{
+		sum = x + y;
+		x = y;
+		y = sum;
+	}
+	return sum;
+}
+
+int main()
+{
+	printf("%d\n", fib(30));
+	printf("%d\n", fibon(30));
+	return 0;
+}
+
+
+// 用迭代法求 X = 3√a 
+// 公式 ： x[i + 1] = 2 / 3 * x[i] + a / (3 * x[i] ^ 2)
+// 迭代到 | x[i + 1] - x[i] | < ε = 10^(-5)  为止， x[i + 1]为近似解
+
+#include<stdio.h>
+#include<math.h>
+int main()
+{
+	float a, m, n;;
+	printf("请输入一个数:");
+	scanf("%f",&a);
+	m = a / 2;
+	
+	while(1)
+	{
+		n = m;
+		m = 0.5 * (m + a / m);
+		
+		if(fabs( m - n ) < pow(10, -5)) 
+			break;
+	}
+	printf("x = %f", m);
+	
+	return 0;
+}
+
+
+/* 使用迭代法求平方根。求平方根的迭代公式为：
+             x[n] + a / x[n]
+  x[n + 1] = ———————————————
+                    2
+
+  要求前后两次求出的 x 的差的绝对值小于 10 的负 5 次幂。*/
+  
+#include<stdio.h>
+#include<math.h>                     
+int main()
+{
+    int a;
+    double x = 1.0, x1;
+    printf("请输入需要计算的数：");
+    scanf("%d", &a);
+    do
+    {
+        x1 = x;
+        x=(x1 + a / x1) / 2;
+    }
+    while(fabs(x - x1) > 1e-5); 
+	
+    printf("结果为%.3lf\n",x);
+    return 0;
+}
