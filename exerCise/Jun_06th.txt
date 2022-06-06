@@ -1,0 +1,148 @@
+//  Created by Just1n on 22/06/6.
+//  Copyright (c) 2022年 . All rights reserved
+
+
+// 将一个整数中的每一位上为奇数的数依次取出，构成一个新数放在 t 中。
+//高位仍在高位， 低位仍在低位。例如，当 s 中的数为：87653142 时，t 中的数为：7531。
+
+#include<stdio.h>
+#include<math.h>
+
+int main()
+{
+	long long int s, sum = 0;
+	int k = 0;
+	
+	printf("请输入一个数：");
+	scanf("%lld", &s);
+	
+	while(s)
+	{
+		// 取最低位s %= 10;
+		// 判断奇偶
+		if(s % 10 % 2 == 1)
+		{
+			// 从低到高依次乘 10
+			sum += (s % 10) * (int)pow(10, k);
+			k++;
+		}
+		
+		s /= 10;
+	}
+	
+	printf("新构成的数为 %lld\n", sum);
+	return 0;
+}
+
+
+// 计算并输出 k 以内最大的 10 个能被 13 或 17 整除的自然数之和。
+// k 的值从键盘传入，若 k 的值为 500，则输出 4622。
+
+#include<stdio.h>
+
+int main()
+{
+	int k, sum = 0, count = 0;
+	
+	printf("请输入k值:");
+	scanf("%d", &k);
+	
+	while( k >= 13 && count < 10)
+	{
+		if(k % 13 == 0 || k % 17 == 0)
+		{
+			sum += k;
+			count ++;
+		}
+		
+		k --;
+	}
+	
+	printf("%d\n", sum);
+	
+	return 0;
+}
+
+
+#include <stdio.h> 
+
+int main()
+{ 
+	int length(char *p);
+	
+	char str[50];
+	int size;
+	
+	printf("请输入一个字符串:");
+	gets(str);
+	
+	size = length(str);
+	
+	printf("字符串中有%d个\n", size);
+
+	return 0;
+}
+
+int length(char *p)
+{
+	int count = 0;
+	
+	for(; *p; p++)
+		count ++;
+	
+	return count;
+}
+
+
+#include<stdio.h>
+
+int main()
+{
+	int x;
+	printf("请输入一个整数x：");
+	scanf("%d", &x);
+	
+	if(x < 0)
+		x = -x;
+	else if(x > 0)
+		x = 2 * x;
+	else 
+		x = 0;
+	
+	printf("x = %d\n", x);
+	
+	return 0;
+}
+
+
+#include<stdio.h>
+
+int main()
+{
+	int n, i, j, arr[6][6] = { 0 };
+	
+	printf("请输入一个正整数 n(1~6):");
+	scanf("%d", &n);
+	
+	for(i = 0; i < n; i++)
+		for(j = 0; j < n; j++)
+			arr[i][j] = i * n + j + 1;
+	
+	for(i = 0; i < n; i++)
+	{
+		for(j = 0; j < n ; j++)
+			printf("%3d", arr[i][j]);
+		printf("\n");
+	}
+	
+	printf("转变成如下：\n");
+	
+	for(i = 0; i < n; i++)
+	{
+		for(j = 0; j < n; j++)
+			printf("%3d", arr[j][i]);
+		printf("\n");
+	}
+	
+	return 0;
+}
